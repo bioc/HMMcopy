@@ -90,6 +90,7 @@ provides scores indicating how mappable the reference sequence at each bin
 is to aligners; the higher the score, the more mappable the sequence.
 
 <<>>=
+options(stringsAsFactors = TRUE)
 library(HMMcopy)
 rfile <- system.file("extdata", "normal.wig", package = "HMMcopy")
 gfile <- system.file("extdata", "gc.wig", package = "HMMcopy")
