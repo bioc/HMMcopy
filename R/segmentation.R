@@ -60,6 +60,11 @@ HMMsegment <- function(correctOut, param = NULL, autosomes = NULL, maxiter = 50,
     getparam = FALSE, verbose = TRUE) {
   chr <- correctOut$chr
 
+  if (!is.factor(chr)) {
+    warning("chr is not a factor, converting to factor")
+    chr <- as.factor(chr)
+  }
+  
   if (is.null(autosomes)) {
     autosomes <- (chr != "X" & chr != "Y" & chr != "23" & chr != "24" &
       chr != "chrX" & chr != "chrY" & chr != "M" & chr != "MT" & chr != "chrM")
@@ -98,6 +103,12 @@ HMMsegment <- function(correctOut, param = NULL, autosomes = NULL, maxiter = 50,
 
 processSegments <- function(seg, chr, start, end, copy) {
   segment <- data.frame()
+
+  if (!is.factor(chr)) {
+    warning("chr is not a factor, converting to factor")
+    chr <- as.factor(chr)
+  }
+  
   chromosomes <- levels(chr)
   for (i in 1:length(chromosomes)) {
     seg_length = dim(seg[[i]])[1]
@@ -124,6 +135,11 @@ processSegments <- function(seg, chr, start, end, copy) {
 manualSegment <- function(copy, chr, autosomes, param, maxiter,
     verbose = TRUE) {
 
+  if (!is.factor(chr)) {
+    warning("chr column is not a factor, converting to factor")
+    chr <- as.factor(chr)
+  }
+  
   if (length(copy) != length(chr) || length (copy) != length(autosomes)) {
     stop("Length of inputs do not match for one of: copy, chr, autosomes")
   }
