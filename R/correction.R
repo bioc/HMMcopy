@@ -62,16 +62,16 @@ rangedDataToWig <- function(correctOutput, file, column = "copy", sample = "R",
     file = file, sep = "\n")
   temp <- data.frame(chr = correctOutput$chr, dat)
   width <- correctOutput$start[2] - correctOutput$start[1]
-  chrs <- levels(correctOutput$chr)
+  chrs <- unique(correctOutput$chr)
 
   for (i in 1:length(chrs)) {
-    chr <- chrs[i]
-    out <- subset(temp, chr == chr)[, 2]
+    chr_chosen <- chrs[i]
+    out <- subset(temp, chr == chr_chosen)[, 2]
     if (verbose) {
-      message(paste("Outputting chromosome ", chr,
+      message(paste("Outputting chromosome ", chr_chosen,
         " (", length(out), ")", sep = ""))
     }
-    cat(paste("fixedStep chrom=", chr, " start=1 step=", width,
+    cat(paste("fixedStep chrom=", chr_chosen, " start=1 step=", width,
       " span=", width, sep = ""), file = file, append = TRUE, sep = "\n")
     cat(out, file = file, sep = "\n", append = TRUE)
   }
