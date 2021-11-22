@@ -58,6 +58,11 @@ rangedDataToWig <- function(correctOutput, file, column = "copy", sample = "R",
   }
   dat[is.na(dat)] <- -1
 
+  if (!is.factor(correctOutput$chr)) {
+    warning("chr column is not a factor, converting to factor")
+    correctOutput$chr <- as.factor(correctOutput$chr)
+  }
+  
   cat(paste("track type=wiggle_0 name=\"", sample, "\"", sep = ""),
     file = file, sep = "\n")
   temp <- data.frame(chr = correctOutput$chr, dat)
@@ -192,6 +197,12 @@ plotBias <- function(correctOutput, points = 10000, ...) {
 }
 
 plotCorrection <- function(correctOutput, chr = correctOutput$chr[1], ...) {
+  
+  if (!is.factor(correctOutput$chr)) {
+    warning("chr column is not a factor, converting to factor")
+    correctOutput$chr <- as.factor(correctOutput$chr)
+  }
+  
   if (!(chr %in% levels(correctOutput$chr))) {
     stop(paste("Invalid chromosome, try one of:",
       paste(levels(correctOutput$chr), collapse = " ")))
